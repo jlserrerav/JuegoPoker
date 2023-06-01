@@ -1,4 +1,4 @@
-package es.studium.juego;
+package es.studium.Poker;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,10 +9,12 @@ public class Controlador implements WindowListener, MouseListener
 {
 	Modelo modelo;
 	MenuPrincipal menuPrincipal;
-
 	Tablero tablero;
+	Tablero1 tablero1;
+	Juego juego;
 	Ranking ranking;
 	Ayuda ayuda;
+	Ayuda2 ayuda2;
 
 
 	int dinerito;
@@ -26,6 +28,7 @@ public class Controlador implements WindowListener, MouseListener
 
 		this.menuPrincipal.addWindowListener(this);
 		this.menuPrincipal.addMouseListener(this);
+
 
 		dinerito = 5;
 	}
@@ -42,6 +45,14 @@ public class Controlador implements WindowListener, MouseListener
 		else if(ranking!=null&&ranking.isActive())
 		{
 			ranking.setVisible(false);
+		}
+		else if(ayuda!=null&&ayuda.isActive())
+		{
+			ayuda.setVisible(false);
+		}
+		else if(menuPrincipal!=null&&menuPrincipal.isActive())
+		{
+			menuPrincipal.setVisible(false);
 		}
 		else
 		{
@@ -77,9 +88,12 @@ public class Controlador implements WindowListener, MouseListener
 			else if(x>80&&x<206&&y>250&&y<300)
 			{
 				ayuda = new Ayuda();
+				ControladorAyuda cayuda = new ControladorAyuda(modelo, ayuda);
+				menuPrincipal.setVisible(false);
+				ayuda.setVisible(true);
 				this.ayuda.addWindowListener(this);
 				this.ayuda.addMouseListener(this);
-			
+
 			}
 			else if(x>80&&x<208&&y>350&&y<400)
 			{
@@ -93,71 +107,66 @@ public class Controlador implements WindowListener, MouseListener
 				// Cuarta opción: Salir
 				System.exit(0);
 			}
-			
-			
 		}
+		
+			
+		else if(tablero.isActive())
+		{
+			// Botón ATRAS de Tablero
+			if(x>40&&x<166&&y>425&&y<475)
+			{
+				
+				menuPrincipal.setVisible(true);
+				tablero.setVisible(false);
+
+			}
+			// Botón SIGUIENTE de Tablero
+			else if (x>740&&x<866&&y>425&&y<475)
+			{
+				tablero1 = new Tablero1();
+				this.tablero1.addWindowListener(this);
+				this.tablero1.addMouseListener(this);
+				tablero1.setVisible(true);
+				tablero.setVisible(false);
+			}
+		}
+		
+		
+		
+		else if(tablero1.isActive())
+		{
+			// Botón ATRAS de Tablero
+			if(x>40&&x<166&&y>425&&y<475)
+			{
+
+				tablero.setVisible(true);
+				tablero1.setVisible(false);
+
+			}
+			else if (x>740&&x<866&&y>425&&y<475)
+			{
+				juego  = new Juego();
+				this.juego.addWindowListener(this);
+				this.juego.addMouseListener(this);
+				juego.setVisible(true);
+				tablero1.setVisible(false);
+			}
+		}
+		
+		
+		
+		
 		else if(ranking.isActive())
 		{
 			if(x>40&&x<166&&y>325&&y<375)
 			{
-				menuPrincipal = new MenuPrincipal();
-				this.menuPrincipal.addWindowListener(this);
-				this.menuPrincipal.addMouseListener(this);
+				menuPrincipal.setVisible(true);
 				ranking.setVisible(false);
-
-
-			}
-		}
-		else if(ayuda.isActive())
-		{
-			if(x>40&&x<166&&y>325&&y<375)
-			{
-				// Segunda opción: Ayuda 2
-				menuPrincipal = new MenuPrincipal();
-				this.menuPrincipal.addWindowListener(this);
-				this.menuPrincipal.addMouseListener(this);
-				ayuda.setVisible(false);
-				
-
-
 			}
 		}
 		
-		else if(tablero.isActive())
-		{
-			// Botón JUGAR de Tablero
-			if(x>20&&x<250&&y>210&&y<250)
-			{
-				dinerito--;
-				numero1 = modelo.aleatorio();
-				numero2 = modelo.aleatorio();
-				numero3 = modelo.aleatorio();
-				System.out.println(numero1+" "+numero2+" "+numero3);
-				// Comprobar SI premio
-				if(numero1==numero2&&numero2==numero3&&numero1==14)
-				{
-					dinerito = dinerito + 5;
-				}
-				else if(numero1==numero2&&numero2==numero3&&numero1>=10&&numero1<=13)
-				{
-					dinerito = dinerito + 2;
-				}
-				else if(numero1==numero2&&numero2==numero3)
-				{
-					dinerito ++;
-				}
-				if(dinerito == 0)
-				{
-					System.out.println("Se acabó");
-					this.tablero.removeMouseListener(this);
-				}
-				else
-				{
-					System.out.println("Tienes "+ dinerito + "€");
-				}
-			}
-		}
 	}
+
 
 	@Override
 	public void mousePressed(MouseEvent e){}
