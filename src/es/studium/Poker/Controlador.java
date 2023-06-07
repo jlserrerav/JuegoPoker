@@ -14,7 +14,7 @@ public class Controlador implements WindowListener, MouseListener
 	Juego juego;
 	Ranking ranking;
 	Ayuda ayuda;
-	Ayuda2 ayuda2;
+
 
 
 	int dinerito;
@@ -41,6 +41,10 @@ public class Controlador implements WindowListener, MouseListener
 		if(tablero!=null&&tablero.isActive())
 		{
 			tablero.setVisible(false);
+		}
+		if(juego!=null&&juego.isActive())
+		{
+			juego.setVisible(false);
 		}
 		else if(ranking!=null&&ranking.isActive())
 		{
@@ -81,18 +85,14 @@ public class Controlador implements WindowListener, MouseListener
 			if(x>80&&x<206&&y>150&&y<200)
 			{
 				// Primera opción: Tablero
-				juego = new Juego();
-				this.juego.addWindowListener(this);
-				this.juego.addMouseListener(this);
+				tablero = new Tablero();
+				this.tablero.addWindowListener(this);
+				this.tablero.addMouseListener(this);
 			}
 			else if(x>80&&x<206&&y>250&&y<300)
 			{
-				ayuda = new Ayuda();
-				ControladorAyuda Aayuda = new ControladorAyuda(modelo, ayuda);
-				menuPrincipal.setVisible(false);
-				ayuda.setVisible(true);
-				this.ayuda.addWindowListener(this);
-				this.ayuda.addMouseListener(this);
+				Ayuda ayuda = new Ayuda();
+				ayuda.AyudaPoker();
 
 			}
 			else if(x>80&&x<208&&y>350&&y<400)
@@ -135,7 +135,7 @@ public class Controlador implements WindowListener, MouseListener
 		
 		else if(tablero1.isActive())
 		{
-			// Botón ATRAS de Tablero
+			// Botón ATRAS de Tablero1
 			if(x>40&&x<166&&y>425&&y<475)
 			{
 
@@ -152,7 +152,6 @@ public class Controlador implements WindowListener, MouseListener
 				tablero1.setVisible(false);
 			}
 		}
-		
 		
 		
 		
