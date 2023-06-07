@@ -81,14 +81,14 @@ public class Controlador implements WindowListener, MouseListener
 			if(x>80&&x<206&&y>150&&y<200)
 			{
 				// Primera opción: Tablero
-				tablero = new Tablero();
-				this.tablero.addWindowListener(this);
-				this.tablero.addMouseListener(this);
+				juego = new Juego();
+				this.juego.addWindowListener(this);
+				this.juego.addMouseListener(this);
 			}
 			else if(x>80&&x<206&&y>250&&y<300)
 			{
 				ayuda = new Ayuda();
-				ControladorAyuda cayuda = new ControladorAyuda(modelo, ayuda);
+				ControladorAyuda Aayuda = new ControladorAyuda(modelo, ayuda);
 				menuPrincipal.setVisible(false);
 				ayuda.setVisible(true);
 				this.ayuda.addWindowListener(this);
