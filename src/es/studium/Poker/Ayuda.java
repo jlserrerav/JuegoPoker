@@ -1,36 +1,27 @@
 package es.studium.Poker;
 
-import java.awt.Frame;
 import java.io.IOException;
-public class Ayuda  extends Frame {
 
-		public Ayuda()
+public class Ayuda
+
+{
+
+	public Ayuda() 
+	{
+	}
+
+
+	public void AyudaPoker()
+	{
+		try
 
 		{
-
+			Runtime.getRuntime().exec("hh.exe AyudaPoker.chm");
 		}
 
-		public void AyudaPoker()
-
+		catch (IOException e)
 		{
-
-			try
-
-			{
-
-				Runtime.getRuntime().exec("hh.exe AyudaPoker.chm");
-
-			}
-
-			catch (IOException e)
-
-			{
-
-				e.printStackTrace();
-
-			}
-
+			e.printStackTrace();
 		}
-
-	
+	}
 }

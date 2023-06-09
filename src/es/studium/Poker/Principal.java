@@ -6,6 +6,8 @@ public class Principal {
 	{
 		Modelo modelo = new Modelo();
 		MenuPrincipal menuPrincipal = new MenuPrincipal();
+		Juego juego = new Juego();
 		new Controlador(modelo, menuPrincipal);
+		new ControladorJuego(juego, modelo);
 	}
 }

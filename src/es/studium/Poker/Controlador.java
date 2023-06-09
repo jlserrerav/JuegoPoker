@@ -14,12 +14,14 @@ public class Controlador implements WindowListener, MouseListener
 	Juego juego;
 	Ranking ranking;
 	Ayuda ayuda;
-
-
-
-	int dinerito;
-
-	int numero1, numero2, numero3;
+	int mazoJugador1[] = new int[26];
+	int mazoJugador2[] = new int[26];
+	int cartaActualJugador1 = 0;
+	int cartaActualJugador2 = 0;
+	int puntosJugador1 = 0;
+	int puntosJugador2 = 0;
+	int turno = 0; // 0 turno jugador 1, 1 turno jugador 2
+	int uno, dos;
 
 	Controlador(Modelo m, MenuPrincipal mp)
 	{
@@ -28,10 +30,8 @@ public class Controlador implements WindowListener, MouseListener
 
 		this.menuPrincipal.addWindowListener(this);
 		this.menuPrincipal.addMouseListener(this);
-
-
-		dinerito = 5;
 	}
+	
 
 	@Override
 	public void windowOpened(WindowEvent e){}
@@ -50,19 +50,11 @@ public class Controlador implements WindowListener, MouseListener
 		{
 			ranking.setVisible(false);
 		}
-		else if(ayuda!=null&&ayuda.isActive())
-		{
-			ayuda.setVisible(false);
-		}
 		else if(menuPrincipal!=null&&menuPrincipal.isActive())
 		{
 			menuPrincipal.setVisible(false);
 		}
-		else
-		{
-			System.exit(0);
-		}
-	}
+}
 	@Override
 	public void windowClosed(WindowEvent e){}
 	@Override
@@ -153,17 +145,14 @@ public class Controlador implements WindowListener, MouseListener
 			}
 		}
 		
-		
-		
 		else if(ranking.isActive())
 		{
-			if(x>40&&x<166&&y>325&&y<375)
+			if(x>40&&x<166&&y>425&&y<475)
 			{
 				menuPrincipal.setVisible(true);
 				ranking.setVisible(false);
 			}
 		}
-		
 	}
 
 
