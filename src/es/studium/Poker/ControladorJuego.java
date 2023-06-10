@@ -10,14 +10,15 @@ public class ControladorJuego  implements WindowListener, MouseListener
 
 	Juego juego;
 	Modelo modelo;
+
 	int mazoJugador1[] = new int[26];
 	int mazoJugador2[] = new int[26];
 	//Cartas Centro
-	int cartaCentro1[] = new int[52];
-	int cartaCentro2[] = new int[52];
-	int cartaCentro3[] = new int[52];
-	int cartaCentro4[] = new int[52];
-	int cartaCentro5[] = new int[52];
+	int cartaCentro1[] = new int[26];
+	int cartaCentro2[] = new int[26];
+	int cartaCentro3[] = new int[16];
+	int cartaCentro4[] = new int[16];
+	int cartaCentro5[] = new int[16];
 	//Cartas Centro 2
 	int cartaActualCentro1 = 0;
 	int cartaActualCentro2 = 0;
@@ -29,9 +30,9 @@ public class ControladorJuego  implements WindowListener, MouseListener
 	int cartaActualJugador2 = 0;
 	int puntosJugador1 = 0;
 	int puntosJugador2 = 0;
-	int turno = 0; // 0 turno jugador 1, 1 turno jugador 2
 	int uno, dos;
-	int jugador1ir = 0;
+	int clicks;
+	int turno;
 	public ControladorJuego(Juego j, Modelo m)
 	{
 		this.juego = j;
@@ -40,111 +41,78 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		this.juego.addMouseListener(this);
 		this.juego.dlgMensajeFinPartida.addWindowListener(this);
 		this.juego.dlgMensajeRonda.addWindowListener(this);
-		this.modelo.barajarCentro(cartaCentro1, cartaCentro2, cartaCentro3, cartaCentro4, cartaCentro5);
-		for(int i= 0; i < 26; i++)
-		{
-			System.out.println(cartaCentro3[i]+"-->"+cartaCentro4[i]);
-		}
+		this.modelo.barajarCentro1(cartaCentro1, cartaCentro2);
+		this.modelo.barajarCentro2(cartaCentro3, cartaCentro4, cartaCentro5);
 	}
 	@Override
 	public void mouseClicked(MouseEvent evento) 
 	{
 		int x = evento.getX();
 		int y = evento.getY();
-		if((x>=900)&&(x<=935)&&(y>=675)&&(y<=710)) //Clicka en el botón ir
-		{
-			if (turno == 0) {
-			jugador1ir = 1;
-			turno = 1;
-			}else if( turno == 1) {
-				if (jugador1ir == 1) {
-					this.juego.mostrarCartaCentro1(cartaCentro1[cartaActualCentro1]);
-					this.juego.mostrarCartaCentro2(cartaCentro2[cartaActualCentro2]);
-					this.juego.mostrarCartaCentro3(cartaCentro3[cartaActualCentro3]);
-					this.juego.mostrarCartaCentro4(cartaCentro4[cartaActualCentro4]);
-					this.juego.mostrarCartaCentro5(cartaCentro5[cartaActualCentro5]);
-					turno = 0;
-					//muestra carta
-				}else {
-				//gana jugador 2
-				}
-			}
+
+		if ((x >= 900) && (x <= 935) && (y >= 675) && (y <= 710)) {
+		    // Clic en el botón "ir"
+		    clicks++;
+		    this.juego.mostrarCartaCentro1(cartaCentro1[cartaActualCentro1]);
+	        this.juego.mostrarCartaCentro2(cartaCentro2[cartaActualCentro2]);
+		    if (clicks == 3) {
+		        // Mostrar CartaCentro3 en el tercer clic
+		        this.juego.mostrarCartaCentro3(cartaCentro3[cartaActualCentro3]);
+		    } else if (clicks == 5) {
+		        // Mostrar CartaCentro4 en el quinto clic
+		        this.juego.mostrarCartaCentro4(cartaCentro4[cartaActualCentro4]);
+		    }
+		    else if (clicks == 7)
+		    {
+		        this.juego.mostrarCartaCentro5(cartaCentro5[cartaActualCentro5]);
+
+		    }
+		    if (clicks >= 7) {
+		        turno = 1; // Reiniciar el turno al jugador 1
+		        clicks = 0; // Reiniciar el contador de clics
+		    }
 		}
-		else if ((x>=320)&&(x<=429)&&(y>=250)&&(y<=400)&&(turno==1))
+
+		else if ((x>=1110)&&(x<=1145)&&(y>=675)&&(y<=710)&&(turno==0))
 		{
 			// Mostrar la carta del Mazo 2
+			this.juego.lblMensajeRonda.setText("Gana Jugador 1!");
+			this.juego.dlgMensajeRonda.setVisible(true);
+			
+		}	
+		else if ((x>=1110)&&(x<=1145)&&(y>=675)&&(y<=710)&&(turno==1))
+		{
+			// Mostrar la carta del Mazo 2
+			this.juego.lblMensajeRonda.setText("Gana Jugador 2!");
+			this.juego.dlgMensajeRonda.setVisible(true);
+			
+		}
 
-			uno = mazoJugador1[cartaActualJugador1] % 13;
-			if(uno==0)
-			{
-				uno = 13;
-			}
-			dos = mazoJugador2[cartaActualJugador2] % 13;
-			if(dos==0)
-			{
-				dos = 13;
-			}
-			if(uno>dos)
-			{
-				puntosJugador1++;
-				this.juego.aumentarPuntosJugador1();
-				this.juego.lblMensajeRonda.setText("Jugador 1 gana esta ronda!");
-				this.juego.dlgMensajeRonda.setVisible(true);
-			}
-			else if (uno<dos)
-			{
-				puntosJugador2++;
-				this.juego.aumentarPuntosJugador2();
-				this.juego.lblMensajeRonda.setText("Jugador 2 gana esta ronda!");
-				this.juego.dlgMensajeRonda.setVisible(true);
-			}
-			else // uno = dos
-			{
-				this.juego.lblMensajeRonda.setText("Nadie gana esta ronda!");
-				this.juego.dlgMensajeRonda.setVisible(true);
-			}
-			cartaActualJugador1++;
-			cartaActualJugador2++;
-			turno = 0;
-		}
-		if((puntosJugador1 >= 4) && (puntosJugador1 >= puntosJugador2+2))
-		{
-			// Ganador el Jugador 1
-			this.juego.lblMensajeFinPartida.setText("GANA Jugador 1");
-			this.juego.dlgMensajeFinPartida.setVisible(true);
-		}
-		else if ((puntosJugador2 >= 4) && (puntosJugador2 >= puntosJugador1+2))
-		{
-			// Ganador el Jugador 2
-			this.juego.lblMensajeFinPartida.setText("GANA Jugador 2");
-			this.juego.dlgMensajeFinPartida.setVisible(true);
-		}
-		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowClosing(WindowEvent e) 
@@ -161,7 +129,7 @@ public class ControladorJuego  implements WindowListener, MouseListener
 			turno = 0;
 			this.juego.mostrarCartaCentro1(-1); // Quitar última carta mostrada
 			this.juego.mostrarCartaCentro2(-1); // Quitar última carta mostrada
-			this.modelo.barajar(mazoJugador1, mazoJugador2);
+			this.modelo.barajarJugadores(mazoJugador1, mazoJugador2);
 		}
 		else if(this.juego.dlgMensajeRonda.isActive())
 		{
@@ -171,31 +139,31 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		{
 			System.exit(0);
 		}
-		
+
 	}
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
