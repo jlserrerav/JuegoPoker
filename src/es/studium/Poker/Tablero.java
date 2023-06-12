@@ -43,9 +43,13 @@ public class Tablero  extends Frame
 		g.drawImage(Siguiente, 740, 425, this);
 		g.drawImage(Atras, 40, 425, this);
 		Color color2 = new Color(229, 74, 53);
+
 		g.setColor(color2);
+
 		g.drawRect(40, 425, 126, 50);
+
 		Color color3 = new Color(229, 74, 53);
+
 		g.setColor(color3);
 
 		g.drawRect(740, 425, 126, 50);
