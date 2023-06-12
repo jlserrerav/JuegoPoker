@@ -76,7 +76,6 @@ public class Juego extends Frame {
 		setLocationRelativeTo(null);
 		setSize(1729,1000);
 
-
 		dlgMensajeFinPartida.setLayout(new FlowLayout());
 		dlgMensajeFinPartida.setSize(100,100);
 		dlgMensajeFinPartida.setLocationRelativeTo(null);
