@@ -47,9 +47,6 @@ public class Controlador implements WindowListener, MouseListener
 	int clicks;
 	int turno;
 
-	int dinerito;
-
-	int numero1, numero2, numero3;
 
 	Controlador(Juego j,Modelo m, MenuPrincipal mp)
 	{
@@ -232,7 +229,7 @@ public class Controlador implements WindowListener, MouseListener
 		    }
 		}
 
-		else if ((x>=1110)&&(x<=1145)&&(y>=675)&&(y<=710)&&(turno==0))
+		else if ((x>=1310)&&(x<=1345)&&(y>=825)&&(y<=860)&&(turno==0))
 		{
 			// Mostrar la carta del Mazo 2
 			this.juego.lblMensajeRonda.setText("Gana Jugador 1!");
