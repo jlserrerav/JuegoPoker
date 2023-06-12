@@ -19,15 +19,24 @@ public class ControladorJuego  implements WindowListener, MouseListener
 	int cartaCentro3[] = new int[16];
 	int cartaCentro4[] = new int[16];
 	int cartaCentro5[] = new int[16];
+	int Carta1Jugador1[] = new int[26];
+	int Carta2Jugador1[] = new int[26];
+	int Carta1Jugador2[] = new int[26];
+	int Carta2Jugador2[] = new int[26];
+
+
 	//Cartas Centro 2
 	int cartaActualCentro1 = 0;
 	int cartaActualCentro2 = 0;
 	int cartaActualCentro3 = 0;
 	int cartaActualCentro4 = 0;
 	int cartaActualCentro5 = 0;
+	
 	//udsbjwid 
-	int cartaActualJugador1 = 0;
-	int cartaActualJugador2 = 0;
+	int cartaActual1Jugador1 = 0;
+	int cartaActual2Jugador1 = 0;
+	int cartaActual1Jugador2 = 0;
+	int cartaActual2Jugador2 = 0;
 	int puntosJugador1 = 0;
 	int puntosJugador2 = 0;
 	int uno, dos;
@@ -43,6 +52,8 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		this.juego.dlgMensajeRonda.addWindowListener(this);
 		this.modelo.barajarCentro1(cartaCentro1, cartaCentro2);
 		this.modelo.barajarCentro2(cartaCentro3, cartaCentro4, cartaCentro5);
+		this.modelo.barajarJugador1(Carta1Jugador1, Carta2Jugador1);
+		this.modelo.barajarJugador2(Carta1Jugador2, Carta2Jugador2);
 	}
 	@Override
 	public void mouseClicked(MouseEvent evento) 
@@ -50,9 +61,13 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		int x = evento.getX();
 		int y = evento.getY();
 
-		if ((x >= 900) && (x <= 935) && (y >= 675) && (y <= 710)) {
+		if ((x >= 1075) && (x <= 1110) && (y >= 825) && (y <= 860)) {
 		    // Clic en el botón "ir"
 		    clicks++;
+		    this.juego.mostrarCarta1Jugador1(Carta1Jugador1[cartaActual1Jugador1]);
+		    this.juego.mostrarCarta2Jugador1(Carta2Jugador1[cartaActual2Jugador1]);
+		    this.juego.mostrarCarta1Jugador2(Carta1Jugador2[cartaActual1Jugador2]);
+		    this.juego.mostrarCarta2Jugador2(Carta2Jugador2[cartaActual2Jugador2]);
 		    this.juego.mostrarCartaCentro1(cartaCentro1[cartaActualCentro1]);
 	        this.juego.mostrarCartaCentro2(cartaCentro2[cartaActualCentro2]);
 		    if (clicks == 3) {
@@ -64,8 +79,8 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		    }
 		    else if (clicks == 7)
 		    {
+		        // Mostrar CartaCentro4 en el septimo clic
 		        this.juego.mostrarCartaCentro5(cartaCentro5[cartaActualCentro5]);
-
 		    }
 		    if (clicks >= 7) {
 		        turno = 1; // Reiniciar el turno al jugador 1
@@ -121,15 +136,12 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		{
 			this.juego.dlgMensajeFinPartida.setVisible(false);
 			// Reinicio
-			cartaActualJugador1 = 0;
-			cartaActualJugador2 = 0;
 			puntosJugador1 = 0;
 			puntosJugador2 = 0;
 			this.juego.resetearContadores();
 			turno = 0;
 			this.juego.mostrarCartaCentro1(-1); // Quitar última carta mostrada
 			this.juego.mostrarCartaCentro2(-1); // Quitar última carta mostrada
-			this.modelo.barajarJugadores(mazoJugador1, mazoJugador2);
 		}
 		else if(this.juego.dlgMensajeRonda.isActive())
 		{
@@ -166,4 +178,4 @@ public class ControladorJuego  implements WindowListener, MouseListener
 		// TODO Auto-generated method stub
 
 	}
-}
+}	
